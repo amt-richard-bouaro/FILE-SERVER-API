@@ -1,0 +1,36 @@
+# Node.js related files and folders
+node_modules/
+package-lock.json
+yarn.lock
+
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# macOS specific files
+.DS_Store
+
+# Editor specific files
+*.sublime-project
+*.sublime-workspace
+.vscode/
+*.idea/
+*.code-workspace
+
+# Compiled output
+/dist/
+/out/
+/build/
+# or
+build/
+
+# Miscellaneous
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
