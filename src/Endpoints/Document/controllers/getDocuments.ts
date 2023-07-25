@@ -2,7 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import pool from "../../../Database/db";
 import { STATUS } from "../../../config";
 
-export const getDocuments = async (req:Request, res:Response, next:NextFunction) => {
+export const getDocuments = async (req: Request, res: Response, next: NextFunction) => {
+    
+
 
     try {
 

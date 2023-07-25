@@ -21,7 +21,7 @@ export const searchDocuments = async (req: Request, res: Response, next: NextFun
         });
 
         return res.status(STATUS.OK).json({
-            code: "DOCUMENTSMATCH",
+            code: "DOCUMENTS_MATCHED",
             message: "Available Documents that match the search",
             data: query.rows
         });

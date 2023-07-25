@@ -15,18 +15,19 @@ export const downloadDocuments = async (req: Request, res: Response, next: NextF
             values: [docID]
         });   
         
-        fs.access(query.rows[0].location, fs.constants.F_OK, (err) => {
+        if (query.rowCount > 0) { 
+            fs.access(query.rows[0].location, fs.constants.F_OK, (err) => {
             if (err) {
                 res.status(404)
                 throw new Error('Error: file not found: ' + query.rows[0].location);
             }
         });
 
-        res.setHeader(`Content-Disposition`, `attachment; filename="tut.jpg"`);
+        res.setHeader(`Content-Disposition`, `attachment; filename="${query.rows[0].name}"`);
 
-        res.setHeader('Content-Type', 'image/jpg');
+        res.setHeader('Content-Type', `${query.rows[0].mime_type}`);
 
-        const fileStream = fs.createReadStream('src/Uploads/LCF-59764-wallpaperflare.com_wallpaper (2).jpg');
+        const fileStream = fs.createReadStream(query.rows[0].location);
 
         fileStream.pipe(res);
 
@@ -36,6 +37,16 @@ export const downloadDocuments = async (req: Request, res: Response, next: NextF
         //     message:"Available Documents",
         //     data:null
         // })
+
+        }
+         
+    
+        return res.status(STATUS.NOT_FOUND).json({
+            code: "DOCUMENT_NOT_FOUND",
+            message:"No document matches the parameter specified",
+            data:null
+        })
+          
         
     } catch (error) {
         const err = <Error>error;

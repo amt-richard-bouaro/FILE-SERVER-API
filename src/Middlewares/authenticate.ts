@@ -17,6 +17,9 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     //set the token to token in request cookies
     token = req.cookies.token; 
 
+    // console.log(req);
+    
+
     if (token) {
         try {
 
