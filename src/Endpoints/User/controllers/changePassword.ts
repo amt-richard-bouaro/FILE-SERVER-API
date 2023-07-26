@@ -24,7 +24,7 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
 
         if (query.rowCount < 1) {
             res.status(STATUS.BAD_REQUEST);
-            throw new Error('Could not find user with id ' + _id);
+            throw new Error('Could not find user with the parameters specified at _id');
         }
         
         const user:USER = query.rows[0];
@@ -33,7 +33,7 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
 
         if (!decode) {
         res.status(STATUS.UNAUTHORIZED);
-        throw new Error(`Permission denied: You are not allowed to change your password`);
+        throw new Error(`Permission denied: You are not allowed to change this user's password. Wrong password`);
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -44,7 +44,11 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
             values: [_id, newPass]
         });
 
-        return res.status(200).json({ message: 'Password changed' });
+        return res.status(200).json({
+            code:"PASSWORD_CHANGED",
+            message: 'Password changed successfully',
+            data:null
+        });
         
         
     } catch (error) {

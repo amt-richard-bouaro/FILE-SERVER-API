@@ -7,10 +7,7 @@ const docsStorage = multer.diskStorage({
         callback(null, 'src/Uploads/')
     },
     filename: function (reg, file, callback) { 
-
-        // console.log(file);
-        
-               
+    
         const uniquePrefix = 'LCF-' + Math.round(Math.random() * 100000);
 
         
@@ -22,4 +19,14 @@ const docsStorage = multer.diskStorage({
 
 export const docUpload = multer({
     storage: docsStorage,
+    limits: {
+        fileSize: 20 * 1024 * 1024
+    },
+    fileFilter: (req, file, callback) =>{
+         if (file.mimetype.split('/')[0] !== 'application') {      
+          callback(new Error('Unsupported file type'))   
+         } else {
+             callback(null, true);
+        }
+    },
 })

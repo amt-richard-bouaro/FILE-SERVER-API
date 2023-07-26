@@ -10,6 +10,7 @@ import { resetPassword } from './controllers/resetPassword';
 
 
 import { authenticate } from '../../Middlewares/authenticate';
+import { getRecents } from '../Document/controllers/recents';
 
 
 const app = express.Router();
@@ -50,11 +51,13 @@ app.post('/auth', authUser);
  */
 app.post('/register', registerUser);
 
-app.get('/logout', logout);
+app.get('/logout',authenticate, logout);
 
 app.put('/password/change', authenticate, changePassword);
 
 app.put('/password/reset', resetPassword);
+
+
 
 app.get('/:_id', authenticate, getUser);
 

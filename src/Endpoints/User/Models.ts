@@ -64,14 +64,29 @@ type USER_CREDENTIALS = z.infer<typeof USER_CREDENTIALS>
 
 interface REQUEST_WITH_USER extends Request {
     user: {
-        _id: string
+        _id: string,
+        email: string
     };
 }
 
 const CHANGE_PASSWORD = z.object({
     currentPassword: z.string().min(8),
-    newPassword: z.string().min(8),
+    newPassword: z.string() .refine(val => {
+        if (val.length < 8) return false;
+
+        if (!/[A-Z]/.test(val)) return false;
+        
+        if (!/[a-z]/.test(val)) return false;
+        
+        if (!/[^a-zA-Z0-9]/.test(val)) return false;
+
+        return true;
+    }, 'Passwords must be at least 8 characters long and include upper case, lower case, and special characters.'),
     confirmPassword: z.string()
+}).refine((val) => val.newPassword === val.confirmPassword, {
+    message: `Password don't match`,
+    path: ['confirmPassword'],
+  
 });
 
 const CHANGE_PASSWORD_CONFIRMED = CHANGE_PASSWORD.refine(value => {

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { SERVER_CONFIG } from '../config';
 import { log } from 'console';
+import { Attachment } from 'nodemailer/lib/mailer';
 
 const transport = nodemailer.createTransport({
     service: 'gmail',
@@ -18,19 +19,21 @@ interface options {
     to: string
     subject: string
     text?: string
-    html?:string
+    html?: string,
+    attachments?: Attachment[] | undefined
 }
 
 export const mailOptions = (options: options) => {
     return {
         from:{
-        name: 'GTP Phase 3',
+        name: 'Lizzy Cloud Files',
         address: SERVER_CONFIG.EMAIL_ADDRESS 
         } || options.from ,
         to: options.to,
         subject: options.subject,
         text: options.text || 'text',
         html: options.html || '',
+        attachments: options.attachments
     }
 };
 

@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 
-// Allow requests from your React app's domain
+
 const allowedOrigins = ['http://localhost:3000'];
 app.use(
   cors({

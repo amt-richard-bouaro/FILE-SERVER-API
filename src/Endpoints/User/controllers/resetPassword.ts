@@ -8,14 +8,14 @@ import { STATUS } from "../../../config";
 import { mailOptions, sendMail } from '../../../utils/email';
 import { passwordChanged } from '../../../utils/mailTemplate';
 
-export const resetPassword = async (req: Request, res: Response, next: NextFunction) => { 
-    
+export const resetPassword = async (req: Request, res: Response, next: NextFunction) => {
+
     const request = <REQUEST_WITH_USER>req;
 
     const {email} = req.body;
 
     try {
-         
+
         USER_EMAIL.parse({email});
 
         const query = await pool.query({
@@ -27,11 +27,11 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
             res.status(STATUS.BAD_REQUEST);
             throw new Error('Password reset failed');
         }
-        
+
         const password: string = 'L-' + uuidv4().replace('-', "").substring(0, 6)
 
         // console.log(password);
-        
+
         const salt = await bcrypt.genSalt(10);
         const newPass = await bcrypt.hash(password, salt);
 
@@ -42,7 +42,7 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
 
         // after update send new password to user via email
         // here
-       
+
         sendMail(mailOptions({
             to: email,
             subject: 'Password Reset',
@@ -50,18 +50,18 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
         }));
 
         return res.status(200).json({
-            code:"PasswordResetSuccess",
+            code:"PASSWORD_RESET_SUCCESS",
             message: 'Password reset successful. A new password has been generated and sent to your registered email address. For security reasons, please change your password as soon as possible.',
             data: null
         });
-        
-        
+
+
     } catch (error) {
-        
+
         const err = <Error>error;
         next(err);
 
     }
-   
+
 
 }

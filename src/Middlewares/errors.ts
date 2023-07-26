@@ -31,7 +31,7 @@ export const errorHandler = <T extends Error>(err: T, req: Request, res: Respons
     
     
     if (status === STATUS.FORBIDDEN) {
-        code = 'MustChangePasswordError';
+        code = 'MUST_CHANGE_PASSWORD';
     }
 
 
