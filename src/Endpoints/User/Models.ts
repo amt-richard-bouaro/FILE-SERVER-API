@@ -32,7 +32,7 @@ const PRIMARY_USER_DATA = z.object({
         return true;
     }, 'Passwords must be at least 8 characters long and include upper case, lower case, and special characters.'),
     confirmPassword: z.string().nonempty(),
-    role: z.enum(ROLES).optional(),
+    role: z.enum(['user']),
 }).refine((val) => val.password === val.confirmPassword, {
     message: `Password don't match`,
     path: ['confirmPassword'],
@@ -50,8 +50,8 @@ type USER = {
     role: "admin" | "user"
     password: string
     must_change_password: boolean
-    created_at: Date
-    updated_at: Date
+    created_at: string
+    updated_at: string
 }
 
 
@@ -106,4 +106,37 @@ const USER_EMAIL = z.object({
     email: z.string().email(),
 })
 
-export {PRIMARY_USER_DATA, USER, USER_CREDENTIALS, REQUEST_WITH_USER,CHANGE_PASSWORD_CONFIRMED, USER_EMAIL}
+
+const NEW_USER_DATA = z.object({
+    surname: z.string()
+        .min(3, 'Surname cannot be less than 3 characters')
+        .nonempty('Provide you surname'),
+    other_names: z.string()
+        .min(3, 'Other names cannot be less than 3 characters')
+        .nonempty('Provide you other names'),
+    email: z.string()
+        .nonempty('Email address is required.')
+        .email('Please enter a valid email address.')
+        .min(5),
+    role: z.enum(ROLES),
+})
+
+type NEW_USER_DATA = z.infer<typeof NEW_USER_DATA>
+
+const UPDATE_USER_DATA = z.object({
+    surname: z.string()
+        .min(3, 'Surname cannot be less than 3 characters')
+        .nonempty('Provide you surname'),
+    other_names: z.string()
+        .min(3, 'Other names cannot be less than 3 characters')
+        .nonempty('Provide you other names'),
+    email: z.string()
+        .nonempty('Email address is required.')
+        .email('Please enter a valid email address.')
+        .min(5),
+
+})
+
+type UPDATE_USER_DATA = z.infer<typeof UPDATE_USER_DATA>
+
+export {PRIMARY_USER_DATA, USER, USER_CREDENTIALS, REQUEST_WITH_USER,CHANGE_PASSWORD_CONFIRMED, USER_EMAIL,NEW_USER_DATA, UPDATE_USER_DATA}

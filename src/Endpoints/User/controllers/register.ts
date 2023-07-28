@@ -75,7 +75,9 @@ export const registerUser = async (req:Request<{},{}, PRIMARY_USER_DATA>, res:Re
         email: user.email,
         role: returnUser.role,
         must_change_password: returnUser.must_change_password,
-        created_at: returnUser.created_at,}
+        created_at: returnUser.created_at,
+        updated_at: returnUser.updated_at
+      }
       });
 
     } catch (error) {

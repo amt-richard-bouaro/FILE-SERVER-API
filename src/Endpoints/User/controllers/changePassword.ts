@@ -46,15 +46,16 @@ export const changePassword = async (req: Request, res: Response<{ code: string,
         const salt = await bcrypt.genSalt(10);
         const newPass = await bcrypt.hash(passwords.newPassword, salt);
 
-        await pool.query({
-            text: `UPDATE users SET password = $2, must_change_password = false WHERE users._id = $1`,
+        const updatedUser = await pool.query({
+            text: `UPDATE users SET password = $2, must_change_password = false WHERE users._id = $1 RETURNING _id, surname, other_names, email, role,must_change_password, created_at, updated_at`,
             values: [_id, newPass]
         });
 
         return res.status(STATUS.OK).json({
             code:"PASSWORD_CHANGED",
             message: 'Password changed successfully',
-            type:'success'
+            type: 'success',
+            data: updatedUser.rows[0]
         });
         
         

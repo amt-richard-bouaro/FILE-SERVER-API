@@ -57,23 +57,21 @@ export const resetPassword = async (req: Request, res: Response<{ code: string, 
          });
           
             return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-            code:"PASSWORD_RESET_SUCCESS",
+            code:"PASSWORD_RESET_FAILED",
             message: 'Password reset failed. Please try again later',
             type: "error"
         });
             
             
-        } else {
-            return res.status(STATUS.OK).json({
+            }      
+
+    });
+
+         return res.status(STATUS.OK).json({
             code:"PASSWORD_RESET_SUCCESS",
             message: 'Password reset successful. A new password has been generated and sent to your registered email address. For security reasons, please change your password as soon as possible.',
             type: "success"
         });
-            
-        }
-    });
-
-       
 
 
     } catch (error) {

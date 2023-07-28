@@ -11,6 +11,8 @@ import { resetPassword } from './controllers/resetPassword';
 
 import { authenticate } from '../../Middlewares/authenticate';
 import { restrictedToAdmin } from '../../Middlewares/accessRestriction';
+import { createUser } from './controllers/createUser';
+import { updateUser } from './controllers/updateUser';
 
 
 
@@ -155,18 +157,16 @@ app.post('/auth', authUser);
  *                 type: string
  *                 default: oWusu247
  *                 format: password
- *               role:
+ *               confirmPassword:
  *                 type: string
- *                 default: user
- *                 enum:
- *                   - admin
- *                   - user
+ *                 default: oWusu247
+ *                 format: password
  *             required:
  *               - surname
  *               - other_names
  *               - email
  *               - password
- *               - role
+ *               - confirmPassword
  *     responses:
  *       201:
  *         description: CREATED
@@ -205,6 +205,77 @@ app.post('/auth', authUser);
  */
 app.post('/register', registerUser);
 
+/**
+ * @openapi
+ * /api/users/add/new:
+ *   post:
+ *     tags:
+ *       - Users
+ *     summary: Create a user - this can only be performed by admins
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               surname:
+ *                 type: string
+ *                 default: Smith
+ *               other_names:
+ *                 type: string
+ *                 default: Michael Owusu
+ *               email:
+ *                 type: string
+ *                 default: msmith@example.com
+ *               role:
+ *                 type: string
+ *                 default: user
+ *                 enum:
+ *                   - admin
+ *                   - user
+ *             required:
+ *               - surname
+ *               - other_names
+ *               - email
+ *               - role
+ *     responses:
+ *       201:
+ *         description: CREATED
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 code:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 type:
+ *                   type: string
+ *                   default: success
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       409:
+ *         description: CONFLICT
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error_Response'
+ *       400:
+ *         description: BAD REQUEST
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error_Response'
+ *       500:
+ *         description: INTERNAL SERVER ERROR
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error_Response'
+ */
+app.post('/add/new',authenticate, restrictedToAdmin, createUser);
 
 /**
  * @openapi
@@ -325,6 +396,74 @@ app.get('/logout',authenticate, logout);
  *               $ref: '#/components/schemas/Error_Response'
  */
 app.put('/password/change', authenticate, changePassword);
+
+/**
+ * @openapi
+ * /api/users/information/update:
+ *   put:
+ *     tags:
+ *       - Users
+ *     summary: Update user information
+ *     parameters:
+ *       - name: token
+ *         in: header
+ *         description: Access token for authentication
+ *         required: false
+ *         schema:
+ *           type: string
+ *           httpOnly: true
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               surname:
+ *                 type: string
+ *               other_names:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: SUCCESS
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 code:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 type:
+ *                   type: string
+ *                   default: success
+ *                 data:
+ *                   $ref: '#/components/schemas/User'
+ *       400:
+ *         description: BAD_REQUEST
+ *         content:
+ *           application/json:
+ *             schema:
+ *               anyOf:
+ *                 - $ref: '#/components/schemas/Error_Response'
+ *                 - $ref: '#/components/schemas/Validation_Error_Response'
+ *       401:
+ *         description: UNAUTHORIZED
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error_Response'
+ *       500:
+ *         description: INTERNAL SERVER ERROR
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error_Response'
+ */
+app.put('/information/update', authenticate, updateUser);
 
 /**
  * @openapi
