@@ -5,7 +5,7 @@ import { STATUS } from '../../../config';
 import { log } from 'console';
 
 
-export const getRecents = async (req: Request, res: Response, next:NextFunction) => {
+export const getRecents = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next:NextFunction) => {
 
     const request = <REQUEST_WITH_USER>req
     
@@ -14,7 +14,7 @@ export const getRecents = async (req: Request, res: Response, next:NextFunction)
     try {
 
         const recents = await pool.query({
-            text: ` SELECT _id, title, description, name, size, created_at, updated_at, ext
+            text: ` SELECT _id, title, description, name, size,downloaded_count, emailed_count, created_at, updated_at, ext
 FROM (
   SELECT
     docs.*,
@@ -31,7 +31,8 @@ WHERE rn = 1;`,
 
         return res.status(STATUS.OK).json({
             code: "RECENT_DOCUMENTS_FOUND",
-            message:"Available Recent Documents",
+            message: "Available Recent Documents",
+            type:'success',
             data:recents.rows
         })
         

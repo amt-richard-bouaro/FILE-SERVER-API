@@ -1,24 +1,47 @@
-import { log } from 'console';
 import express, {Request, Response} from 'express';
 
 const app = express.Router();
 
 /**
  * @openapi
- * /api:
- *   get:
- *     tags:
- *       - API Info
- *     description: Welcome to swagger-jsdoc!
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
+ * components:
+ *   schemas:
+ *     Error_Response:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: string
+ *         message:
+ *           type: string
+ *         type:
+ *           type: string
+ *           default: error
+ *     Validation_Error_Response:
+ *       type: object
+ *       properties:
+ *         code:
+ *           type: string
+ *         message:
+ *           type: string
+ *         type:
+ *           type: string
+ *           default: error
+ *         error:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               validation:
+ *                 type: string
+ *               message:
+ *                 type: string
+ *               path:
+ *                 type: array
+ *                 items:
+ *                   type: string
  */
 app.get('/', async (req:Request, res:Response) => { 
-    try {
-
-        // console.log(process.memoryUsage);
-    
+    try {  
         return res.status(200).send(process.memoryUsage())
 
     } catch (error) {

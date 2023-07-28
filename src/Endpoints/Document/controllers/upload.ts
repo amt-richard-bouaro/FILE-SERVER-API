@@ -6,6 +6,8 @@ import pool from '../../../Database/db';
 import { REQUEST_WITH_USER } from '../../User/Models';
 
 
+
+
 export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:NextFunction) => {
     
     const incomingDocInfo = req.body;
@@ -32,8 +34,11 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
                 ext
           }
         } else {
-            res.status(STATUS.PARTIAL_CONTENT);
-            throw new Error(`Error uploading file: Unsupported file type or file size exceeded or no file uploaded`);
+           return res.status(STATUS.BAD_REQUEST).json({
+                code: "MISSING_FILE",
+                message: 'Error uploading file: Unsupported file type or file size exceeded or no file uploaded',
+                type: "error"
+            })
         }
 
         const _id = uuidv4();
@@ -41,19 +46,23 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
         const title = file.name.slice(0, 9) + ': ' + incomingDocInfo.title;
 
         const query = await pool.query({
-            text: `INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ($1, $2, $3, $4,$5,$6,$7, $8, $9) RETURNING *`,
+            text: `INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ($1, $2, $3, $4,$5,$6,$7, $8, $9) RETURNING _id, name, title, description, user_id, downloaded_count, emailed_count, size, ext`,
             values: [_id, file.name,title, incomingDocInfo.description, user._id, file.location, file.size, file.mimeType, file.ext]
         });
 
         if (query.rowCount < 1) {
-            res.status(STATUS.INTERNAL_SERVER_ERROR);
-            throw new Error('Something went wrong with the query');
+              return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+                code: "UPLOAD_FAILED",
+                message: 'Something went wrong with the creation of the file',
+                type: "error"
+            })
         }
             
         
         return res.status(STATUS.CREATED).send({
             code: "DOCUMENT_UPLOADED",
             message: "Document has been successfully uploaded",
+            type:"success",
             data:query.rows[0]
         });
 

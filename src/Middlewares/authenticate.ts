@@ -40,15 +40,21 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
                 
                 if (user.must_change_password === true && req.url !== '/password/change') {
                     
-                    res.status(STATUS.FORBIDDEN);
+                    // res.status(STATUS.FORBIDDEN);
 
-                    throw new Error('For security reasons, please change your password as soon as possible.');
+                    // throw new Error('For security reasons, please change your password as soon as possible.');
+
+                    return res.status(STATUS.FORBIDDEN).json({
+                        code: "FORBIDDEN",
+                        message: "For security reasons, please change your password as soon as possible.",
+                        data: null
+                    });
                 }
 
             }
 
             //merge user with req
-            Object.assign(req, { user: query.rows[0] })
+            Object.assign(req, { user: query.rows[0] });
 
             //call next middleware
             return next();
@@ -63,14 +69,20 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         }
     } else {
 
-        //set response status
-        res.status(STATUS.UNAUTHORIZED);
+        return res.status(STATUS.UNAUTHORIZED).json({
+            code: "UNAUTHORIZED",
+            message: "Unauthorized: No token",
+            data:null
+        })
 
-        //instantiate an error
-        let err = new Error('Unauthorized: no token');
+        // //set response status
+        // res.status(STATUS.UNAUTHORIZED);
 
-         //call next middleware
-        return next(err);
+        // //instantiate an error
+        // let err = new Error('Unauthorized: no token');
+
+        //  //call next middleware
+        // return next(err);
     }
 
 

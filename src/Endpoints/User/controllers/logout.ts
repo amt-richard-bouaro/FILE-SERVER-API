@@ -2,7 +2,10 @@ import { Request, Response } from 'express';
 
 import { STATUS } from '../../../config';
 
-export const logout = async (req: Request, res: Response) => {
+
+
+
+export const logout = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>) => {
 
   res.cookie('token','', {
     httpOnly: true,
@@ -11,8 +14,8 @@ export const logout = async (req: Request, res: Response) => {
 
   return res.status(STATUS.OK).json({
     code:"LOGGED_OUT",
-    message: "Logged out successful",
-    data:null
+    message: "Logged out successfully",
+    type:'success'
   })
 
 }

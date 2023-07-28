@@ -2,7 +2,7 @@ export const SERVER_CONFIG = {
     PORT: process.env.PORT || 8080,
     NODE_ENV: process.env.NODE_ENV || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
-
+    ALLOWED_ORIGINS: ['http://localhost:3000', 'http://localhost:5050'],
     EMAIL_ADDRESS: process.env.EMAIL_ADDRESS || '',
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || ''
 }

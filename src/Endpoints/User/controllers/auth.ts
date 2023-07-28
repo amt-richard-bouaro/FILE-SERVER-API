@@ -4,9 +4,11 @@ import { USER_CREDENTIALS ,USER} from '../Models'
 import pool from '../../../Database/db'
 import { STATUS } from '../../../config';
 import tokenGenerator from '../../../utils/tokenGenerator';
+import { z } from 'zod';
 
 
-export const authUser = async (req: Request<{},{},USER_CREDENTIALS>, res: Response, next: NextFunction) => {
+
+export const authUser = async (req: Request<{},{},USER_CREDENTIALS>, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => {
     
  let user_credentials = req.body;
 
@@ -21,26 +23,34 @@ export const authUser = async (req: Request<{},{},USER_CREDENTIALS>, res: Respon
       
 
       if (userExits.rowCount < 1) { 
-        res.status(STATUS.UNAUTHORIZED);
-        throw new Error(`The password and email combination is invalid or missing`);
+        return res.status(STATUS.UNAUTHORIZED).json({
+          code: "UNAUTHORIZED",
+          message: "The password and email combination is invalid or missing",
+          type:'error',
+        })
+
       };
     
     const user:USER = userExits.rows[0]
     
-    const decode = await bcrypt.compare(user_credentials.password, user.password)
-
+    const decode = await bcrypt.compare(user_credentials.password, user.password);
   
       if (!decode) {
-        res.status(STATUS.UNAUTHORIZED);
-        throw new Error(`The password and email combination is invalid or missing`);
+         return res.status(STATUS.UNAUTHORIZED).json({
+          code: "UNAUTHORIZED",
+          message: "The password and email combination is invalid or missing",
+          type:'error',
+        })
     }
     
     tokenGenerator(res, {_id:user._id});
 
-    return res.status(STATUS.OK).send({
+    return res.status(STATUS.OK).json({
       code:"LOGIN_SUCCESS",
       message: "Logged in successfully",
+      type:"success",
       data: {
+        _id:user._id,
         surname: user.surname,
         other_names: user.other_names,
         email: user.email,
@@ -51,8 +61,7 @@ export const authUser = async (req: Request<{},{},USER_CREDENTIALS>, res: Respon
       }
     });
 
-    } catch (error) {
-     
+    } catch (error) {  
       const err = <Error>error
       return next(err);
     }

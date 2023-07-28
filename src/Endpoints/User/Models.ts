@@ -65,7 +65,10 @@ type USER_CREDENTIALS = z.infer<typeof USER_CREDENTIALS>
 interface REQUEST_WITH_USER extends Request {
     user: {
         _id: string,
-        email: string
+        email: string,
+        role: string,
+        surname: string,
+        other_names: string
     };
 }
 

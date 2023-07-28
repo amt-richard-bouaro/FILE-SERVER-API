@@ -3,7 +3,7 @@ import pool from "../../../Database/db";
 import { STATUS } from "../../../config";
 import { SEARCH_STRING } from "../Models";
 
-export const searchDocuments = async (req: Request, res: Response, next: NextFunction) => {
+export const searchDocuments = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => {
 
     const { search } = req.body;
 
@@ -23,6 +23,7 @@ export const searchDocuments = async (req: Request, res: Response, next: NextFun
         return res.status(STATUS.OK).json({
             code: "DOCUMENTS_MATCHED",
             message: "Available Documents that match the search",
+            type: "success",
             data: query.rows
         });
 

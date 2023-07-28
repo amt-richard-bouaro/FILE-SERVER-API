@@ -5,7 +5,7 @@ import pool from "../../../Database/db";
 import { STATUS } from "../../../config";
 
 
-export const changePassword = async (req: Request, res: Response, next: NextFunction) => { 
+export const changePassword = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => { 
     
     const request = <REQUEST_WITH_USER>req;
 
@@ -23,8 +23,12 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
         });
 
         if (query.rowCount < 1) {
-            res.status(STATUS.BAD_REQUEST);
-            throw new Error('Could not find user with the parameters specified at _id');
+
+            return res.status(STATUS.BAD_REQUEST).json({
+            code:"PASSWORD_CHANGE_FAILED",
+            message: 'Could not find user account',
+            type: "error"
+        });
         }
         
         const user:USER = query.rows[0];
@@ -32,22 +36,25 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
         const decode = await bcrypt.compare(passwords.currentPassword, user.password);
 
         if (!decode) {
-        res.status(STATUS.UNAUTHORIZED);
-        throw new Error(`Permission denied: You are not allowed to change this user's password. Wrong password`);
+           return res.status(STATUS.UNAUTHORIZED).json({
+            code:"PASSWORD_CHANGE_FAILED",
+            message: `Permission denied: You are not allowed to change this user's password. Wrong password`,
+            type: "error"
+        });
         }
 
         const salt = await bcrypt.genSalt(10);
         const newPass = await bcrypt.hash(passwords.newPassword, salt);
 
-        const passUpdated = await pool.query({
-            text: `UPDATE users SET password = $2, must_change_password = false WHERE users._id = $1 RETURNING *`,
+        await pool.query({
+            text: `UPDATE users SET password = $2, must_change_password = false WHERE users._id = $1`,
             values: [_id, newPass]
         });
 
-        return res.status(200).json({
+        return res.status(STATUS.OK).json({
             code:"PASSWORD_CHANGED",
             message: 'Password changed successfully',
-            data:null
+            type:'success'
         });
         
         

@@ -1,6 +1,5 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { SentMessageInfo } from 'nodemailer';
 import { SERVER_CONFIG } from '../config';
-import { log } from 'console';
 import { Attachment } from 'nodemailer/lib/mailer';
 
 const transport = nodemailer.createTransport({
@@ -38,17 +37,8 @@ export const mailOptions = (options: options) => {
 };
 
 
-export const sendMail = (mailOptions: options) => {
-    transport.sendMail(mailOptions, (err, result) => {
-        if (err) {
-        //    throw new Error(err.message) 
-            console.log(err);
-            
-        } else {
-            console.log('email sent successfully');
-            
-        }
-    })
+export const sendMail = (mailOptions: options, callback:(err: Error | null, info: SentMessageInfo) => void) => {
+    transport.sendMail(mailOptions, callback)
 }
 
 
