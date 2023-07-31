@@ -19,18 +19,26 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
 
         DOC_INFO.parse(incomingDocInfo);
 
-        let file:FILE_INFO;
+        
+
+        let file: FILE_INFO;
+       
         
         if (req.file) {
-          
-            const originalname = req.file.originalname;
+
+
+            const incomingFile = req.file as  Express.MulterS3.File;
+         
+            const originalname = incomingFile.originalname;
             const nameParts = originalname.split('.');
             const ext = nameParts[nameParts.length - 1];
+
+
             file = {
-                name: req.file.filename,
-                size: req.file.size,
-                location: req.file.path,
-                mimeType: req.file.mimetype,
+                name: incomingFile.key,
+                size: incomingFile.size,
+                location: incomingFile.location,
+                mimeType: incomingFile.mimetype,
                 ext
           }
         } else {
