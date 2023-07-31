@@ -9,7 +9,7 @@
     "start":"node build/app.js",
     "test": "jest",
     "build": "tsc",
-    "vercel-build": "npm run build"
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
