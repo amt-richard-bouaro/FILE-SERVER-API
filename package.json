@@ -2,10 +2,14 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "private": true,
+  "main": "src/app.ts",
+
   "scripts": {
     "dev": "npx nodemon",
-    "test": "jest"
+    "start":"node build/app.js",
+    "test": "jest",
+    "build": "tsc",
+    "vercel-build": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -33,6 +37,7 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "@netlify/functions": "^1.6.0",
     "adm-zip": "^0.5.10",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
@@ -43,6 +48,7 @@
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.3",
     "pg": "^8.11.1",
+    "serverless-http": "^3.2.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.0",

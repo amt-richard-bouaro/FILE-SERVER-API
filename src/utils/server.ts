@@ -33,7 +33,7 @@ function createServer() {
     app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  return res.status(200).json({});
+  return res.status(200).json({apiVersion: '1.0.0'});
 })
     
 const PORT = SERVER_CONFIG.PORT;
