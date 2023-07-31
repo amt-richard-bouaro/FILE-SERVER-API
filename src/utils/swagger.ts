@@ -41,7 +41,7 @@ function swaggerDocs(app: Express, port: number) {
         res.send(swaggerSpec);
     })
 
-    console.log(`Docs available at http://localhost:${port}/api/docs`);
+    console.log(`Docs available at https://file-server-api.vercel.app/api/docs`);
     
 }
 

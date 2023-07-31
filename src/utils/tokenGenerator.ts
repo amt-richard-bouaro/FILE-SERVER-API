@@ -12,7 +12,7 @@ const tokenGenerator = <T extends object>(res:Response, param:T) => {
         httpOnly: true,
         secure: SERVER_CONFIG.NODE_ENV === 'production',
         // secure: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         maxAge: 7 * 24 * 60 * 60 * 1000
     })
 
