@@ -1,10 +1,9 @@
 
 import multer from "multer";
-import path from "path";
 
 const docsStorage = multer.diskStorage({
     destination: function (reg, file, callback) {
-        callback(null, 'src/Uploads/')
+        callback(null, 'uploads/')
     },
     filename: function (reg, file, callback) { 
     
