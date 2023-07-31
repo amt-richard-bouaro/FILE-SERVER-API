@@ -7,6 +7,13 @@ export const SERVER_CONFIG = {
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || 'somePassword'
 }
 
+export const S3_BUCKET = {
+    REGION: process.env.AWS_BUCKET_REGION,
+    NAME: process.env.AWS_BUCKET_NAME || '',
+    ACCESS_KEY: process.env.AWS_ACCESS_KEY_ID || '',
+    SECRET_KEY: process.env.AWS_SECRET_ACCESS_KEY  || '',
+}
+
 interface dbConfiguration {
     PORT: string ,
     HOST: string,

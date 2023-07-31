@@ -5,6 +5,7 @@ import pool from "../../../Database/db";
 import { REQUEST_WITH_USER } from "../../User/Models";
 import { mailOptions, sendMail } from "../../../utils/email";
 import { emailDocument } from "../../../utils/mailTemplate";
+import { getFile } from "../../../utils/s3";
 
 
 export const emailDocuments = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,24 +20,14 @@ export const emailDocuments = async (req: Request, res: Response, next: NextFunc
             values: [docID]
         });
 
-        console.log(query.rowCount);
+    
+if (query.rowCount > 0) {
 
+      const key = query.rows[0].name;
 
-        if (query.rowCount < 1) {
-            return res.status(STATUS.NOT_FOUND).json({
-                code: "DOCUMENT_NOT_FOUND",
-                message: "No document matches the parameter specified",
-                type: 'error'
-            })
+      getFile(key).then( async (file) => { 
 
-        }
-
-
-
-
-            const attachmentPath = query.rows[0].location;
-
-            const attachment = fs.readFileSync(attachmentPath);
+        if (file instanceof Buffer) { 
 
             sendMail(mailOptions({
                 to: user.email,
@@ -45,7 +36,7 @@ export const emailDocuments = async (req: Request, res: Response, next: NextFunc
                 attachments: [
                     {
                         filename: query.rows[0].name,
-                        content: attachment,
+                        content: file,
                     },
                 ],
             }));
@@ -60,13 +51,49 @@ export const emailDocuments = async (req: Request, res: Response, next: NextFunc
                 values: [user._id, docID, via],
             });
 
-
-
             return res.status(STATUS.OK).json({
                 code: "DOCUMENT_SENT_TO_MAIL",
                 message: `Document has been sent to ${user.email}`,
                 type: 'success',
             })
+
+  
+      } else {
+      return res.status(STATUS.NOT_FOUND).json({
+        code: "DOCUMENT_NOT_FOUND",
+        message: "No document matches the parameter specified",
+        type: 'error'
+      })
+
+    }
+
+      }).catch((err) => { 
+
+        console.log(err);
+        
+        return res.status(STATUS.NOT_FOUND).json({
+        code: "DOCUMENT_NOT_FOUND",
+        message: "No document matches the parameter specified",
+        type: 'error'
+      })
+
+      });
+
+      
+
+     
+
+    } else {
+      return res.status(STATUS.NOT_FOUND).json({
+        code: "DOCUMENT_NOT_FOUND",
+        message: "No document matches the parameter specified",
+        type: 'error'
+      })
+
+    }
+
+
+           
 
 
     } catch (error) {
