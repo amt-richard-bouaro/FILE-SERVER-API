@@ -5,8 +5,8 @@ import { Attachment } from 'nodemailer/lib/mailer';
 const transport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: SERVER_CONFIG.EMAIL_ADDRESS,
-        pass: SERVER_CONFIG.EMAIL_PASSWORD
+        user: SERVER_CONFIG.EMAIL_ADDRESS || 'access002granted@gmail.com',
+        pass: SERVER_CONFIG.EMAIL_PASSWORD || 'bqwznjwtnkfbykqz'
     }
 });
 
@@ -37,8 +37,18 @@ export const mailOptions = (options: options) => {
 };
 
 
-export const sendMail = (mailOptions: options, callback:(err: Error | null, info: SentMessageInfo) => void) => {
-    transport.sendMail(mailOptions, callback)
+export const sendMail = async (mailOptions: options, callback?: (err: Error | null, info: SentMessageInfo) => void) => {
+    try {
+        
+        callback ? transport.sendMail(mailOptions, callback) : transport.sendMail(mailOptions);  
+        
+    } catch (error) {
+
+        console.log(error);
+        
+    }
+   
+    
 }
 
 

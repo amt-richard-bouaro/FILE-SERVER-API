@@ -65,7 +65,13 @@ export const downloadDocuments = async (req: Request, res: Response<{ code: stri
         });
       });
 
-      fileStream.pipe(res); 
+         fileStream.pipe(res); 
+         
+        //  return res.status(STATUS.OK).json({
+        //     code: "DOCUMENT_READY",
+        //     message:"Document ready for download",
+        //     type:'success'
+        // }) 
     }); 
                     
         } else {

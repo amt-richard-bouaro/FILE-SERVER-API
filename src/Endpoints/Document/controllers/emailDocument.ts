@@ -22,7 +22,17 @@ export const emailDocuments = async (req: Request, res: Response, next: NextFunc
         console.log(query.rowCount);
 
 
-        if (query.rowCount > 0) {
+        if (query.rowCount < 1) {
+            return res.status(STATUS.NOT_FOUND).json({
+                code: "DOCUMENT_NOT_FOUND",
+                message: "No document matches the parameter specified",
+                type: 'error'
+            })
+
+        }
+
+
+
 
             const attachmentPath = query.rows[0].location;
 
@@ -38,48 +48,26 @@ export const emailDocuments = async (req: Request, res: Response, next: NextFunc
                         content: attachment,
                     },
                 ],
-            }), async (err, result) => {
-                if (err) {
-                    console.log(err);
+            }));
 
-                    return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-                        code: "EMAIL_SENDING_FAILED",
-                        message: 'Sending Document Failed. Please try again later',
-                        type: "error"
-                    });
-
-
-                } 
+            await pool.query({
+                text: 'UPDATE documents SET emailed_count = emailed_count + 1 WHERE _id = $1',
+                values: [docID]
+            });
+            const via = 'email'
+            await pool.query({
+                text: 'INSERT INTO user_docs (user_id, doc_id, via) VALUES ($1, $2, $3)',
+                values: [user._id, docID, via],
             });
 
-                    await pool.query({
-                        text: 'UPDATE documents SET emailed_count = emailed_count + 1 WHERE _id = $1',
-                        values: [docID]
-                    });
-                    const via = 'email'
-                    await pool.query({
-                        text: 'INSERT INTO user_docs (user_id, doc_id, via) VALUES ($1, $2, $3)',
-                        values: [user._id, docID, via],
-                    });
-
-                       
-
-                    return res.status(STATUS.OK).json({
-                        code: "DOCUMENT_SENT_TO_MAIL",
-                        message: `Document has been sent to ${user.email}`,
-                        type: 'success',
-                    })
 
 
-        }
-        else {
-            return res.status(STATUS.NOT_FOUND).json({
-                code: "DOCUMENT_NOT_FOUND",
-                message: "No document matches the parameter specified",
-                type: 'error'
+            return res.status(STATUS.OK).json({
+                code: "DOCUMENT_SENT_TO_MAIL",
+                message: `Document has been sent to ${user.email}`,
+                type: 'success',
             })
 
-        }
 
     } catch (error) {
         const err = <Error>error;

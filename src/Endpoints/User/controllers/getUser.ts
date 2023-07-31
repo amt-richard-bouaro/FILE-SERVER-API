@@ -33,6 +33,8 @@ import { type } from 'os';
 export const getUser = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next:NextFunction) => {
 
     const request = <REQUEST_WITH_USER>req;
+
+    
 try {
 
     const userId = request.params._id

@@ -10,14 +10,14 @@ interface JWT_PAYLOAD extends JwtPayload {
 }
 
 
-export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+export const authenticate = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => {
 
     let token;
 
     //set the token to token in request cookies
     token = req.cookies.token; 
 
-    // console.log(req);
+    // console.log(req.cookies);
     
 
     if (token) {
@@ -39,22 +39,20 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
                 const user: USER = query.rows[0];
                 
                 if (user.must_change_password === true && req.url !== '/password/change') {
-                    
-                    // res.status(STATUS.FORBIDDEN);
-
-                    // throw new Error('For security reasons, please change your password as soon as possible.');
 
                     return res.status(STATUS.FORBIDDEN).json({
                         code: "FORBIDDEN",
                         message: "For security reasons, please change your password as soon as possible.",
-                        data: null
+                        type: 'error'
                     });
                 }
 
+                //merge user with req
+              Object.assign(req, { user });
+
             }
 
-            //merge user with req
-            Object.assign(req, { user: query.rows[0] });
+            
 
             //call next middleware
             return next();
@@ -72,7 +70,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         return res.status(STATUS.UNAUTHORIZED).json({
             code: "UNAUTHORIZED",
             message: "Unauthorized: No token",
-            data:null
+            type:'error'
         })
 
         // //set response status

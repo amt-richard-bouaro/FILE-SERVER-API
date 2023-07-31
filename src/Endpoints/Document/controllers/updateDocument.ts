@@ -21,14 +21,14 @@ export const updateDocument = async (req: Request<{ _id: string }, {}, DOC_INFO>
         });
 
         if (query.rowCount < 1) {
-            return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
+            return res.status(STATUS.BAD_REQUEST).json({
             code: "DOCUMENT_MODIFIED",
             message: 'Something went wrong with the query',
             type: 'error'
         });
         }
 
-        return res.status(STATUS.ACCEPTED).json({
+        return res.status(STATUS.OK).json({
             code: "DOCUMENT_MODIFIED",
             message: 'Document information was updated successfully',
             type: 'success',

@@ -32,7 +32,7 @@ import { STATUS } from "../../../config";
  */
 export const getDocument = async (req: Request, res: Response<{ code: string, message: string,type:'error'|'success', data?: any[] | {} |null}>, next: NextFunction) => {
 
-    const docID = req.params._id;
+    const docID = req.params._id;   
     
     try {
 
@@ -58,6 +58,7 @@ export const getDocument = async (req: Request, res: Response<{ code: string, me
 
         
     } catch (error) {
+
         const err = <Error>error;
         next(err);
     }

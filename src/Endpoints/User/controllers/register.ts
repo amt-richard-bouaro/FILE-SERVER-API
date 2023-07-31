@@ -44,24 +44,13 @@ export const registerUser = async (req:Request<{},{}, PRIMARY_USER_DATA>, res:Re
     const hashPassword = await bcrypt.hash(user.password, salt);
     user.password = hashPassword;
     
-    let role = 'user'
+    const role = 'user'
 
       const createUser = await pool.query({
         text: 'INSERT INTO users(_id, surname, other_names, email, password, role ) VALUES($1, $2, $3, $4, $5, $6)RETURNING *',
         values: [user._id, user.surname, user.other_names, user.email, user.password, role],
       }); 
 
-      
-      if (createUser.rowCount < 1) {
-
-      return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-      
-          code: `USER_REGISTRATION_FAILED`,
-          message: `Error occurred while creating user`,
-          type: 'error'
-     
-      });
-    }
     
     const returnUser = createUser.rows[0];
 
@@ -83,6 +72,7 @@ export const registerUser = async (req:Request<{},{}, PRIMARY_USER_DATA>, res:Re
     } catch (error) {
     const err = error as Error
 
+      
       next(err);
     } 
 

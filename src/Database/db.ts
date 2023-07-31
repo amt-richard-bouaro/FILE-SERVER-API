@@ -9,5 +9,6 @@ const pool = new Pool({
     password: DB_CONFIG.PASSWORD
 });
 
+
 // 
 export default pool;

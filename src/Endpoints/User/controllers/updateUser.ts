@@ -23,6 +23,20 @@ export const updateUser = async (req: Request<{}, {}, UPDATE_USER_DATA>, res: Re
 
         const { surname, other_names, email } = user_data
         const ID = request.user._id
+
+        const checkoutUser = await pool.query({
+            text: 'SELECT _id, surname, other_names, email, role, must_change_password, created_at, updated_at FROM users WHERE email = $1 AND _id != $2',
+            values: [email, ID],
+        });
+
+        if (checkoutUser.rowCount > 0) {
+             return res.status(STATUS.BAD_REQUEST).json({
+                code: `EMAIL_TAKEN`,
+                message: `Email Already taken`,
+                type: 'error'
+
+            });
+        }
         
         const updateUser = await pool.query({
             text: 'UPDATE users SET surname = $1, other_names = $2, email = $3 WHERE _id = $4 RETURNING _id, surname, other_names, email, role, must_change_password, created_at, updated_at ',
@@ -33,7 +47,7 @@ export const updateUser = async (req: Request<{}, {}, UPDATE_USER_DATA>, res: Re
         if (updateUser.rowCount < 1) {
             return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
 
-                code: `UPDATED_FAILED`,
+                code: `UPDATE_FAILED`,
                 message: `Error occurred while updating user information. Please try again later.`,
                 type: 'error'
 
@@ -45,7 +59,7 @@ export const updateUser = async (req: Request<{}, {}, UPDATE_USER_DATA>, res: Re
             code: 'USER_UPDATED',
             message: 'User information was updated successfully',
             type: 'success',
-            data: updateUser
+            data: updateUser.rows[0]
         });
 
     } catch (error) {

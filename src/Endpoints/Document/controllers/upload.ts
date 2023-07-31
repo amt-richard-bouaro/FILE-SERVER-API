@@ -49,14 +49,6 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
             text: `INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ($1, $2, $3, $4,$5,$6,$7, $8, $9) RETURNING _id, name, title, description, user_id, downloaded_count, emailed_count, size, ext`,
             values: [_id, file.name,title, incomingDocInfo.description, user._id, file.location, file.size, file.mimeType, file.ext]
         });
-
-        if (query.rowCount < 1) {
-              return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-                code: "UPLOAD_FAILED",
-                message: 'Something went wrong with the creation of the file',
-                type: "error"
-            })
-        }
             
         
         return res.status(STATUS.CREATED).send({

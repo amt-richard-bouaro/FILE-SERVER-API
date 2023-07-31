@@ -59,43 +59,11 @@ export const createUser = async (req: Request<{}, {}, NEW_USER_DATA>, res: Respo
         });
 
 
-        if (createUser.rowCount < 1) {
-
-            return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-
-                code: `USER_REGISTRATION_FAILED`,
-                message: `Error occurred while creating user`,
-                type: 'error'
-
-            });
-        }
-
-
         sendMail(mailOptions({
             to: user.email,
             subject: 'Password Reset',
             html: passwordChanged(pass)
-        }),
-            async (err, result) => {
-                if (err) {
-
-                    await pool.query({
-                        text: 'DELETE FROM users WHERE _id = $1',
-                        values: [user._id],
-                    });
-                    return res.status(STATUS.INTERNAL_SERVER_ERROR).json({
-                        code: "PASSWORD_RESET_FAILED",
-                        message: 'Password reset failed. Please try again later',
-                        type: "error"
-                    });
-
-
-                }
-
-            });
-
-
-
+        }));
 
         const returnUser = createUser.rows[0];
 

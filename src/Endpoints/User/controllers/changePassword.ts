@@ -1,6 +1,6 @@
 import bcrypt  from 'bcrypt';
 import { NextFunction, Request, Response } from "express";
-import {REQUEST_WITH_USER, CHANGE_PASSWORD_CONFIRMED, USER } from '../Models'
+import {REQUEST_WITH_USER, CHANGE_PASSWORD, USER } from '../Models'
 import pool from "../../../Database/db";
 import { STATUS } from "../../../config";
 
@@ -13,7 +13,7 @@ export const changePassword = async (req: Request, res: Response<{ code: string,
 
     try {
          
-        CHANGE_PASSWORD_CONFIRMED.parse(passwords);
+        CHANGE_PASSWORD.parse(passwords);
 
         const _id = request.user._id;
 

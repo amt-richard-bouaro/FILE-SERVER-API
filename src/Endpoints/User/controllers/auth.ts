@@ -10,7 +10,8 @@ import { z } from 'zod';
 
 export const authUser = async (req: Request<{},{},USER_CREDENTIALS>, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => {
     
- let user_credentials = req.body;
+  let user_credentials = req.body;
+  
 
   try {
       
@@ -62,7 +63,10 @@ export const authUser = async (req: Request<{},{},USER_CREDENTIALS>, res: Respon
     });
 
     } catch (error) {  
-      const err = <Error>error
+    const err = <Error>error
+    
+    console.log(error);
+    
       return next(err);
     }
 }

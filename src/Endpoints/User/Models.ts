@@ -32,7 +32,7 @@ const PRIMARY_USER_DATA = z.object({
         return true;
     }, 'Passwords must be at least 8 characters long and include upper case, lower case, and special characters.'),
     confirmPassword: z.string().nonempty(),
-    role: z.enum(['user']),
+    // role: z.enum(['user']),
 }).refine((val) => val.password === val.confirmPassword, {
     message: `Password don't match`,
     path: ['confirmPassword'],
@@ -139,4 +139,4 @@ const UPDATE_USER_DATA = z.object({
 
 type UPDATE_USER_DATA = z.infer<typeof UPDATE_USER_DATA>
 
-export {PRIMARY_USER_DATA, USER, USER_CREDENTIALS, REQUEST_WITH_USER,CHANGE_PASSWORD_CONFIRMED, USER_EMAIL,NEW_USER_DATA, UPDATE_USER_DATA}
+export {PRIMARY_USER_DATA, USER, USER_CREDENTIALS, REQUEST_WITH_USER,CHANGE_PASSWORD_CONFIRMED,CHANGE_PASSWORD, USER_EMAIL,NEW_USER_DATA, UPDATE_USER_DATA}

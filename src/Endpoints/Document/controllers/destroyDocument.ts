@@ -26,6 +26,7 @@ export const destroyDocument = async (req: Request, res: Response<{ code: string
         const destroyDocLoc = query.rows[0].location;
 
         fs.unlink(destroyDocLoc, async (err) => {
+            
             if (err) {
                 // console.log(err);
                 let doc = query.rows[0];
