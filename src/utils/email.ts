@@ -1,12 +1,12 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { SentMessageInfo } from 'nodemailer';
 import { SERVER_CONFIG } from '../config';
-import { log } from 'console';
+import { Attachment } from 'nodemailer/lib/mailer';
 
 const transport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: SERVER_CONFIG.EMAIL_ADDRESS,
-        pass: SERVER_CONFIG.EMAIL_PASSWORD
+        user: SERVER_CONFIG.EMAIL_ADDRESS || 'access002granted@gmail.com',
+        pass: SERVER_CONFIG.EMAIL_PASSWORD || 'bqwznjwtnkfbykqz'
     }
 });
 
@@ -18,34 +18,37 @@ interface options {
     to: string
     subject: string
     text?: string
-    html?:string
+    html?: string,
+    attachments?: Attachment[] | undefined
 }
 
 export const mailOptions = (options: options) => {
     return {
         from:{
-        name: 'GTP Phase 3',
+        name: 'Lizzy Cloud Files',
         address: SERVER_CONFIG.EMAIL_ADDRESS 
         } || options.from ,
         to: options.to,
         subject: options.subject,
         text: options.text || 'text',
         html: options.html || '',
+        attachments: options.attachments
     }
 };
 
 
-export const sendMail = (mailOptions: options) => {
-    transport.sendMail(mailOptions, (err, result) => {
-        if (err) {
-        //    throw new Error(err.message) 
-            console.log(err);
-            
-        } else {
-            console.log('email sent successfully');
-            
-        }
-    })
+export const sendMail = async (mailOptions: options, callback?: (err: Error | null, info: SentMessageInfo) => void) => {
+    try {
+        
+        callback ? transport.sendMail(mailOptions, callback) : transport.sendMail(mailOptions);  
+        
+    } catch (error) {
+
+        console.log(error);
+        
+    }
+   
+    
 }
 
 

@@ -1,4 +1,3 @@
-import { log } from 'console';
 import {Express, Request, Response } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
@@ -25,7 +24,7 @@ const options: swaggerJsdoc.Options = {
             bearerAuth: [],
         }]
     },
-    apis: ['./src/Endpoints/*.ts', './src/Endpoints/User/*.ts', './src/Endpoints/Document/*.ts', './src/Endpoints/Document/controllers/*.ts', './src/Endpoints/User/controllers/*.ts']
+    apis: ['./src/Endpoints/*.ts', './src/Endpoints/User/*.ts', './src/Endpoints/Document/*.ts', './src/Endpoints/Document/controllers/*.ts', './src/Endpoints/User/controllers/*.ts', './src/utils/docs.yaml']
 
 
 }
@@ -37,7 +36,7 @@ function swaggerDocs(app: Express, port: number) {
     app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
-    app.get('docs.json', (req:Request, res:Response) => {
+    app.get('/docs.json', (req:Request, res:Response) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     })

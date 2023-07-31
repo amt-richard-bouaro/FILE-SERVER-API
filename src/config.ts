@@ -2,9 +2,9 @@ export const SERVER_CONFIG = {
     PORT: process.env.PORT || 8080,
     NODE_ENV: process.env.NODE_ENV || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
-
-    EMAIL_ADDRESS: process.env.EMAIL_ADDRESS || '',
-    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || ''
+    ALLOWED_ORIGINS: ['http://localhost:3000', 'http://localhost:5050'],
+    EMAIL_ADDRESS: process.env.EMAIL_ADDRESS || 'examples@example.com',
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || 'somePassword'
 }
 
 interface dbConfiguration {
@@ -16,11 +16,11 @@ interface dbConfiguration {
 }
 
 export const DB_CONFIG: dbConfiguration = {
-    PORT: process.env.DB_PORT || '',
+    PORT: process.env.DB_PORT || '5432',
     HOST: process.env.DB_HOST || 'localhost',
-    DATABASE: process.env.DB_DATABASE || 'test',
-    USER: process.env.DB_USER || 'postgres',
-    PASSWORD: process.env.DB_PASSWORD || '',
+    DATABASE: process.env.DB_DATABASE || 'db_fs_test',
+    USER: process.env.DB_USER || 'tester',
+    PASSWORD: process.env.DB_PASSWORD || 'testing',
 }
 
 interface status {

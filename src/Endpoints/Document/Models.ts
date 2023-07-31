@@ -12,6 +12,7 @@ type FILE_INFO = {
     size: number;
     location: string;
     mimeType: string
+    ext:string
 }
 
 const SEARCH_STRING = z.string();
