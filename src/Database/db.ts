@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import { DB_CONFIG } from '../config';
+// import { DB_CONFIG } from '../config';
 
 // const pool = new Pool({
 //     host: DB_CONFIG.HOST,
@@ -15,11 +15,10 @@ const pool = new Pool({
 
 pool.connect(err => {
     if (err) {
-        throw err;
-    }
-
-    console.log('Connect to database successfully');
-    
+       console.log('...connecting to database');
+    } else {
+        console.log('Connected to database successfully');
+    } 
 })
 
 

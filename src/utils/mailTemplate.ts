@@ -23,7 +23,7 @@ export const passwordChanged = (info:string) => {
 <br/>
 If you didn't request this password reset, please ignore this email. Your account remains secure, and no action is needed.
 <br/><br/>
-For security reasons, this link is valid for the next 30 minutes. After that, you'll need to request another reset.
+For security reasons, you will be asked to change this when login.
 <br/><br/>
 If you have any questions or need further assistance, please don't hesitate to contact our support team at ghetrich370@gmail.com.
 <br/><br/>
@@ -52,7 +52,7 @@ export const emailDocument = (name:string) => {
  </p>
 
  <p>
- We received a request from your account at Lizzy Cloud Docs request a document. Please find attached the requested document<br/>
+ We received a request from your account at Lizzy Cloud Docs requesting a document. Please find attached the requested document<br/>
 <br/>
 
 <br/>

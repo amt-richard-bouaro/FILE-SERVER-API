@@ -6,8 +6,6 @@ import pool from '../../../Database/db';
 import { REQUEST_WITH_USER } from '../../User/Models';
 
 
-
-
 export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:NextFunction) => {
     
     const incomingDocInfo = req.body;

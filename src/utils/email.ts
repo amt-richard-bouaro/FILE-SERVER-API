@@ -5,8 +5,8 @@ import { Attachment } from 'nodemailer/lib/mailer';
 const transport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: SERVER_CONFIG.EMAIL_ADDRESS || 'access002granted@gmail.com',
-        pass: SERVER_CONFIG.EMAIL_PASSWORD || 'bqwznjwtnkfbykqz'
+        user: SERVER_CONFIG.EMAIL_ADDRESS || '',
+        pass: SERVER_CONFIG.EMAIL_PASSWORD || ''
     }
 });
 
