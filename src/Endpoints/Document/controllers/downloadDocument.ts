@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import fs from "fs";
+
 import { STATUS } from "../../../config";
 import pool from "../../../Database/db";
 import { REQUEST_WITH_USER } from "../../User/Models";
 import { getFile } from "../../../utils/s3";
 import stream , { Readable } from "stream";
-import { buffer } from "stream/consumers";
+
 
 
 export const downloadDocuments = async (req: Request, res: Response<{ code: string, message: string, type: 'error' | 'success', data?: any[] | {} | null }>, next: NextFunction) => {
@@ -25,13 +25,17 @@ export const downloadDocuments = async (req: Request, res: Response<{ code: stri
 
       const key = query.rows[0].name;
 
-      getFile(key).then( async (file) => { 
+      const buffer = await getFile(key);
 
-        if (file instanceof Buffer) {
+      if (buffer instanceof Buffer) {
+            
+        const readableStream = Readable.from(buffer);
 
-       res.setHeader('Content-Type', query.rows[0].mime_type);
+        res.setHeader('Content-Type', query.rows[0].mime_type);
         res.setHeader('Content-Disposition', `attachment; filename=${key}`);
 
+          
+            
           await pool.query({
             text: 'UPDATE documents SET downloaded_count = downloaded_count + 1 WHERE _id = $1',
             values: [docID],
@@ -44,7 +48,8 @@ export const downloadDocuments = async (req: Request, res: Response<{ code: stri
             values: [user._id, docID, via],
           });
 
-        res.end(file);
+        readableStream.pipe(res);
+
       } else {
       return res.status(STATUS.NOT_FOUND).json({
         code: "DOCUMENT_NOT_FOUND",
@@ -53,20 +58,6 @@ export const downloadDocuments = async (req: Request, res: Response<{ code: stri
       })
 
     }
-
-      }).catch((err) => { 
-
-        console.log(err);
-        
-        return res.status(STATUS.NOT_FOUND).json({
-        code: "DOCUMENT_NOT_FOUND",
-        message: "No document matches the parameter specified",
-        type: 'error'
-      })
-
-      });
-
-      // const readStream = await getFile(key)
 
      
 
