@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import pool from "../../../Database/db";
 import { STATUS } from "../../../config";
-import fs from "fs";
+
 import { deleteObject } from "../../../utils/s3";
 
 

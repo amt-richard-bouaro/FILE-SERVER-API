@@ -11,9 +11,6 @@ import swaggerDocs from './swagger';
 
 function createServer() {
 
-  
-
-
     const app = express();
 
     app.use(
@@ -22,6 +19,9 @@ function createServer() {
                 if (origin && SERVER_CONFIG.ALLOWED_ORIGINS.includes(origin)) {
                     callback(null, true);
                 } else {
+
+                    console.log('Rjected '+ origin);
+                    
                     callback(null, false);
                 }
             },
@@ -33,7 +33,11 @@ function createServer() {
     app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  return res.status(200).json({apiVersion: '1.0.0'});
+    return res.status(200)
+        .json({
+            app: 'Lizzy File Server',
+            apiVersion: '1.0.0'
+        });
 })
     
 const PORT = SERVER_CONFIG.PORT;

@@ -1,4 +1,4 @@
-import fs  from 'fs';
+
 import { S3_BUCKET } from '../config'
 import { S3Client, GetObjectCommand,DeleteObjectCommand } from '@aws-sdk/client-s3';
 import type {Readable} from 'stream'
@@ -18,9 +18,6 @@ export const getFile = async (fileKey: string) =>{
         Key: fileKey,
         Bucket: S3_BUCKET.NAME
     }
-
-    
-
 
     try {
       

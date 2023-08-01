@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import fs from "fs";
+
 import { STATUS } from "../../../config";
 import pool from "../../../Database/db";
 import { REQUEST_WITH_USER } from "../../User/Models";
@@ -40,8 +40,15 @@ if (query.rowCount > 0) {
                     },
                 ],
             }));
+          
+        const checkUserRequesting = await pool.query({
+        text: `SELECT * FROM user_docs WHERE doc_id = $1 AND user_id = $2 AND via = 'email'`,
+        values: [docID, user._id]
+        });
+          
+          if (checkUserRequesting.rowCount === 0) { 
 
-            await pool.query({
+              await pool.query({
                 text: 'UPDATE documents SET emailed_count = emailed_count + 1 WHERE _id = $1',
                 values: [docID]
             });
@@ -51,6 +58,7 @@ if (query.rowCount > 0) {
                 values: [user._id, docID, via],
             });
 
+          }
             return res.status(STATUS.OK).json({
                 code: "DOCUMENT_SENT_TO_MAIL",
                 message: `Document has been sent to ${user.email}`,
