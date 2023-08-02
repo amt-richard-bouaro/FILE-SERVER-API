@@ -61,12 +61,15 @@ CLIENT_ORIGIN =
 ```
 
 ## Project Structure
+```sh
 
+  
+```
 
 
 ## Database Schemas
 
-![ER Diagram](https://static.wikia.nocookie.net/denpaonna/images/8/84/Erio_Touwa_2.jpg/revision/latest?cb=20180226170827)
+![ER Diagram](https://github.com/rBOUARO-AMALITECH/FILE-SERVER-API/blob/087909ff3496d1bd90b23176291e78d71285cb86/ER-Diagram.png)
 
 ## API Endpoints
 
