@@ -62,7 +62,65 @@ CLIENT_ORIGIN =
 
 ## Project Structure
 ```sh
-
+.
+├── package.json
+├── README.md
+├── src
+|     ├── app.ts
+|     ├── config.ts
+|     ├── __tests__
+│            ├── controllers
+|                  ├── document.test.ts
+|                  ├── user.test.ts
+│                  └── LCF-31516-tut.pdf
+│            ├── utils
+│                  └── tokenGeneration.test.ts
+│           └── app.test.ts
+|     ├── Database
+│           └── db.ts
+|     ├── Endpoints
+│           ├── Documents
+│                 ├── controllers
+|                       ├── destroyDocument.ts
+|                       ├── documentsStat.ts
+|                       ├── downloadDocument.ts
+|                       ├── emailDocument.ts
+|                       ├── getDocument.ts
+|                       ├── getDocuments.ts
+|                       ├── recents.ts
+|                       ├── searchDocuments.ts
+|                       ├── updateDocument.ts
+│                       └── upload.ts
+│                 ├── Models.ts
+│                 └── root.ts
+│           ├── Users
+│                 ├── controllers
+|                       ├── auth.ts
+|                       ├── changePassword.ts
+|                       ├── createUser.ts
+|                       ├── getUser.ts
+|                       ├── getUsers.ts
+|                       ├── logout.ts
+|                       ├── register.ts
+|                       ├── resetPassword.ts
+│                       └── updateUser.ts
+│                 ├── Models.ts
+│                 └── root.ts
+│           ├── Middlewares
+|                 ├── errors.ts
+│                 ├── accessRestriction.ts
+│                 └── authenticate.ts
+│           ├── utils
+|                 ├── email.ts
+│                 ├── fileUploader.ts
+│                 ├── mailTemplate.ts
+│                 ├── s3.ts
+│                 ├── server.ts
+│                 ├── swagger.ts
+│                 └── tokenGenerator.ts
+│           └── default.ts
+└── public
+    └── .gitkeep
   
 ```
 
