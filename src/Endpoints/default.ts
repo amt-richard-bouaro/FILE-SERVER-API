@@ -40,17 +40,14 @@ const app = express.Router();
  *                 items:
  *                   type: string
  */
-app.get('/', async (req:Request, res:Response) => { 
-    try {  
-        return res.status(200).send(process.memoryUsage())
 
-    } catch (error) {
-        console.log(error);
-        
-    }
+app.get('/', async (req:Request, res:Response) => {
+    return res.status(200)
+        .json({
+            app: 'Lizzy File Server',
+            apiVersion: '1.0.0'
+        });
 })
-
-
 
 
 export default app;

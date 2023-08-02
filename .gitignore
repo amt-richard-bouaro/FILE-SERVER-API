@@ -23,7 +23,7 @@ yarn-error.log*
 *.code-workspace
 
 #test files
-/src/__tests__
+#/src/__tests__
 /coverage
 
 # Compiled output

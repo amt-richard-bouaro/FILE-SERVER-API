@@ -15,7 +15,7 @@ const options: swaggerJsdoc.Options = {
             securitySchemas: {
                 bearerAuth: {
                     type: 'http',
-                    schema: 'bearer',
+                    schema: 'token',
                     bearerFormat: 'jwt'
                 }
             }
@@ -24,6 +24,7 @@ const options: swaggerJsdoc.Options = {
             bearerAuth: [],
         }]
     },
+    
     apis: ['./src/Endpoints/*.ts', './src/Endpoints/User/*.ts', './src/Endpoints/Document/*.ts', './src/Endpoints/Document/controllers/*.ts', './src/Endpoints/User/controllers/*.ts', './src/utils/docs.yaml']
 
 
@@ -33,7 +34,9 @@ const options: swaggerJsdoc.Options = {
 const swaggerSpec = swaggerJsdoc(options);
 
 function swaggerDocs(app: Express, port: number) {
-    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
+    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
     app.get('/docs.json', (req:Request, res:Response) => {
@@ -41,7 +44,7 @@ function swaggerDocs(app: Express, port: number) {
         res.send(swaggerSpec);
     })
 
-    console.log(`Docs available at https://file-server-api.vercel.app/api/docs`);
+    console.log(`Docs available at https://file-server-api.vercel.app/`);
     
 }
 

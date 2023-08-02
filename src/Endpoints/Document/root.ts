@@ -346,7 +346,7 @@ app.post('/search', authenticate, searchDocuments);
  *           httpOnly: true
  *     responses:
  *       200:
- *         description: Docuuments
+ *         description: Documents
  *         content:
  *           application/json:
  *             schema:
