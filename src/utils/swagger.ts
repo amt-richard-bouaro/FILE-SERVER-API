@@ -60,7 +60,7 @@ function swaggerDocs(app: Express, port: number) {
 
 
     app.get('/docs.json', (req: Request, res: Response) => {
-        // res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         return res.status(STATUS.OK).json(swaggerSpec);
     })
 
