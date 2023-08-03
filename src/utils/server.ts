@@ -18,11 +18,11 @@ function createServer() {
             origin: function (origin, callback) {
                 if (origin && SERVER_CONFIG.ALLOWED_ORIGINS.includes(origin)) {
                     callback(null, true);
-                  
+
                 } else {
 
                     // console.log('Cors rejection origin:' + origin);  
-                    
+
                     callback(null, false);
                 }
             },
@@ -30,30 +30,33 @@ function createServer() {
         })
     );
 
+    
+    app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
+
     app.use(cookieParser());
 
 
-    
-const PORT = SERVER_CONFIG.PORT;
+
+    const PORT = SERVER_CONFIG.PORT;
 
     app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-       ...customOptions
+        ...customOptions
     }));
 
-app.use('/api/documents', doc);
+    app.use('/api/documents', doc);
 
 
-app.use('/api/users', user);
+    app.use('/api/users', user);
 
-app.use('/api', api);
+    app.use('/api', api);
 
-    
-swaggerDocs(app, PORT as number);
-    
-app.use(notFoundError);
-app.use(errorHandler);
-    
+
+    swaggerDocs(app, PORT as number);
+
+    app.use(notFoundError);
+    app.use(errorHandler);
+
     return app;
 }
 
