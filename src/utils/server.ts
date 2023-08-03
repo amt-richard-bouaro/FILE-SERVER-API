@@ -21,7 +21,7 @@ function createServer() {
                   
                 } else {
 
-                    console.log('Cors rejection origin:' + origin);  
+                    // console.log('Cors rejection origin:' + origin);  
                     
                     callback(null, false);
                 }
@@ -40,8 +40,8 @@ const PORT = SERVER_CONFIG.PORT;
 
  swaggerDocs(app, PORT as number);
 
-    app.use('/', (req, res) => {
-    res.redirect('/api')
+app.get('/', async (req, res) => {
+    return res.redirect('/api')
 })
 
 app.use('/api/documents', doc);
