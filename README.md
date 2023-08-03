@@ -61,7 +61,7 @@ CLIENT_ORIGIN =
 ```
 
 ## Project Structure
-
+```sh
 .
 ├── package.json
 ├── README.md
@@ -121,7 +121,7 @@ CLIENT_ORIGIN =
 │           └── default.ts
 └── public
     └── .gitkeep
-
+```
 ## Database Schemas
 
 ![ER Diagram](https://github.com/rBOUARO-AMALITECH/FILE-SERVER-API/blob/087909ff3496d1bd90b23176291e78d71285cb86/ER-Diagram.png)
