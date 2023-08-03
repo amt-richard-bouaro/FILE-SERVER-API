@@ -8,7 +8,6 @@ import doc from '../Endpoints/Document/root';
 import user from '../Endpoints/User/root';
 import { notFoundError, errorHandler } from '../Middlewares/errors';
 import swaggerDocs, { customOptions, swaggerSpec } from './swagger';
-import path from 'path';
 
 function createServer() {
 
@@ -32,9 +31,9 @@ function createServer() {
     );
 
 
-    app.use(express.static(path.join(__dirname, '/public/swagger-ui-bundle.js')))
-
+    app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
+    app.use(express.static("/public"));
     app.use(cookieParser());
 
 
