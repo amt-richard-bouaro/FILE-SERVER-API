@@ -33,7 +33,7 @@ const options: swaggerJsdoc.Options = {
 
  export const customOptions = {
         customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
-        customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.js',
+        customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui-standalone-preset.min.js',
     }
 
 
