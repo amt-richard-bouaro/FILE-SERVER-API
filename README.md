@@ -62,6 +62,7 @@ CLIENT_ORIGIN =
 ```
 
 ## Project Structure
+
 ```sh
 .
 ├── package.json
@@ -123,9 +124,6 @@ CLIENT_ORIGIN =
 └── public
     └── .gitkeep
   
-```
-
-
 ```
 ## Database Schemas
 
