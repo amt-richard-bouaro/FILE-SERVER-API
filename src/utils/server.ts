@@ -2,12 +2,12 @@ import express from 'express';
 import { SERVER_CONFIG } from '../config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
+import swaggerUi from 'swagger-ui-express';
 import api from '../Endpoints/default';
 import doc from '../Endpoints/Document/root';
 import user from '../Endpoints/User/root';
 import { notFoundError, errorHandler } from '../Middlewares/errors';
-import swaggerDocs from './swagger';
+import swaggerDocs, { swaggerSpec } from './swagger';
 
 function createServer() {
 
@@ -38,11 +38,9 @@ function createServer() {
 const PORT = SERVER_CONFIG.PORT;
 
 
- swaggerDocs(app, PORT as number);
 
-app.get('/', async (req, res) => {
-    return res.redirect('/api')
-})
+
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/documents', doc);
 
@@ -51,6 +49,9 @@ app.use('/api/users', user);
 
 app.use('/api', api);
 
+    
+swaggerDocs(app, PORT as number);
+    
 app.use(notFoundError);
 app.use(errorHandler);
     

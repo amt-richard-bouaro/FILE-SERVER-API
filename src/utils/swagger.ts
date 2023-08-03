@@ -1,7 +1,8 @@
 import {Express, Request, Response } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-// import { version } from '../../package.json'
+import { STATUS } from '../config';
+
 
 
 const options: swaggerJsdoc.Options = {
@@ -31,7 +32,7 @@ const options: swaggerJsdoc.Options = {
 }
 
 
-const swaggerSpec = swaggerJsdoc(options);
+export const swaggerSpec = swaggerJsdoc(options);
 
 function swaggerDocs(app: Express, port: number) {
 
@@ -40,8 +41,8 @@ function swaggerDocs(app: Express, port: number) {
 
 
     app.get('/docs.json', (req:Request, res:Response) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.send(swaggerSpec);
+        // res.setHeader('Content-Type', 'application/json');
+        return res.status(STATUS.OK).json(swaggerSpec);
     })
 
     console.log(`Docs available at https://file-server-api.vercel.app/api/docs`);
