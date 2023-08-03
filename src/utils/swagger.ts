@@ -56,7 +56,7 @@ export const swaggerSpec = swaggerJsdoc(options);
 function swaggerDocs(app: Express, port: number) {
 
 
-    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { ...customOptions }));
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
     app.get('/docs.json', (req: Request, res: Response) => {
