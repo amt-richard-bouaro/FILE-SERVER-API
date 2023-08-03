@@ -33,16 +33,13 @@ function createServer() {
 
 
     app.use(express.json());
-
     app.use(cookieParser());
 
 
 
     const PORT = SERVER_CONFIG.PORT;
 
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-        ...customOptions
-    }));
+    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     app.use('/api/documents', doc);
 
