@@ -14,7 +14,7 @@ const options: swaggerJsdoc.Options = {
         components: {
             securitySchemas: {
                 bearerAuth: {
-                    type: 'http',
+                    type: 'https',
                     schema: 'token',
                     bearerFormat: 'jwt'
                 }
