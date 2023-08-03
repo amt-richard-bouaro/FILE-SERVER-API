@@ -39,7 +39,7 @@ function createServer() {
 
     const PORT = SERVER_CONFIG.PORT;
 
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    // app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
     app.use('/api/documents', doc);
 
