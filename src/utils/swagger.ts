@@ -36,7 +36,7 @@ const swaggerSpec = swaggerJsdoc(options);
 function swaggerDocs(app: Express, port: number) {
 
 
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
     app.get('/docs.json', (req:Request, res:Response) => {
@@ -44,7 +44,7 @@ function swaggerDocs(app: Express, port: number) {
         res.send(swaggerSpec);
     })
 
-    console.log(`Docs available at https://file-server-api.vercel.app/`);
+    console.log(`Docs available at https://file-server-api.vercel.app/api/docs`);
     
 }
 

@@ -18,9 +18,10 @@ function createServer() {
             origin: function (origin, callback) {
                 if (origin && SERVER_CONFIG.ALLOWED_ORIGINS.includes(origin)) {
                     callback(null, true);
+                  
                 } else {
 
-                    console.log('Cors rejection origin:' + origin);
+                    console.log('Cors rejection origin:' + origin);  
                     
                     callback(null, false);
                 }
@@ -39,14 +40,14 @@ const PORT = SERVER_CONFIG.PORT;
 
  swaggerDocs(app, PORT as number);
 
-app.use('/api', api);
+
 
 app.use('/api/documents', doc);
 
 
 app.use('/api/users', user);
 
-
+app.use('/api', api);
 
 app.use(notFoundError);
 app.use(errorHandler);
