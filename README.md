@@ -1,3 +1,4 @@
+
 # File Server
 
 ## Description
@@ -17,13 +18,13 @@ A file server API where documents can be easily accessed and downloaded remotely
 Clone the repository
 
 ```sh
-$ git clone https://github.com/rBOUARO-AMALITECH/FILE-SERVER-API.git
+git clone https://github.com/rBOUARO-AMALITECH/FILE-SERVER-API.git
 
 ```
 Install the dependencies
 
 ```sh
-$ npm install
+npm install
 ```
 
 Setup the environment variables
@@ -121,11 +122,13 @@ CLIENT_ORIGIN =
 │           └── default.ts
 └── public
     └── .gitkeep
+  
 ```
+
+
 ## Database Schemas
 
 ![ER Diagram](https://github.com/rBOUARO-AMALITECH/FILE-SERVER-API/blob/087909ff3496d1bd90b23176291e78d71285cb86/ER-Diagram.png)
-
 
 ## API Endpoints
 
@@ -956,3 +959,4 @@ Implemented endpoints
     }
 
     ```
+
