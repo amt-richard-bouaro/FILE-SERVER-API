@@ -23,6 +23,7 @@ import { type } from 'os';
  *           type: string
  *         must_change_password:
  *           type: boolean
+ *           default: false
  *         created_at:
  *           type: string
  *         updated_at:

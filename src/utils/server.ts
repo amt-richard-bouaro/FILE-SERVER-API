@@ -20,7 +20,7 @@ function createServer() {
                     callback(null, true);
                 } else {
 
-                    console.log('Rjected '+ origin);
+                    console.log('Cors rejection origin:' + origin);
                     
                     callback(null, false);
                 }
@@ -32,26 +32,20 @@ function createServer() {
     app.use(express.json());
     app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    return res.status(200)
-        .json({
-            app: 'Lizzy File Server',
-            apiVersion: '1.0.0'
-        });
-})
+
     
 const PORT = SERVER_CONFIG.PORT;
 
-swaggerDocs(app, PORT as number);
- 
+
+ swaggerDocs(app, PORT as number);
 
 app.use('/api', api);
-
 
 app.use('/api/documents', doc);
 
 
 app.use('/api/users', user);
+
 
 
 app.use(notFoundError);

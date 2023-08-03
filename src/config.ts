@@ -1,5 +1,5 @@
 export const SERVER_CONFIG = {
-    PORT: process.env.PORT || 8080,
+    PORT: process.env.PORT || 5050,
     NODE_ENV: process.env.NODE_ENV || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
     ALLOWED_ORIGINS: [process.env.CLIENT_ORIGIN, 'http://localhost:5050'],
