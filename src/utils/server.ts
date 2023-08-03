@@ -7,7 +7,7 @@ import api from '../Endpoints/default';
 import doc from '../Endpoints/Document/root';
 import user from '../Endpoints/User/root';
 import { notFoundError, errorHandler } from '../Middlewares/errors';
-import swaggerDocs, { swaggerSpec } from './swagger';
+import swaggerDocs, { customOptions, swaggerSpec } from './swagger';
 
 function createServer() {
 
@@ -37,12 +37,8 @@ function createServer() {
     
 const PORT = SERVER_CONFIG.PORT;
 
-
-
-
     app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-        customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
-        customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui-bundle.min.js',
+       ...customOptions
     }));
 
 app.use('/api/documents', doc);

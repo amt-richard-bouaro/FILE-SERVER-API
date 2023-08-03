@@ -31,13 +31,18 @@ const options: swaggerJsdoc.Options = {
 
 }
 
+ export const customOptions = {
+        customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
+        customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.js',
+    }
+
 
 export const swaggerSpec = swaggerJsdoc(options);
 
 function swaggerDocs(app: Express, port: number) {
 
 
-    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {...customOptions}));
 
 
     app.get('/docs.json', (req:Request, res:Response) => {
