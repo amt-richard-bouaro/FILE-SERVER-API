@@ -40,7 +40,10 @@ const PORT = SERVER_CONFIG.PORT;
 
 
 
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+        customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
+        customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui-bundle.min.js',
+    }));
 
 app.use('/api/documents', doc);
 
