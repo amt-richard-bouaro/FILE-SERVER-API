@@ -11,7 +11,18 @@ const options: swaggerJsdoc.Options = {
         info: {
             title: 'File Server API Documentation',
             version: '1.0.0',
+            contact: {
+        name: "API Support",
+        url: "https://file-server-api.vercel.app/api/",
+        email: "richard.bouaro@amalitech.org",
+      },
         },
+        servers: [
+      {
+        url: "https://file-server-api.vercel.app/",
+        description: "File Server API Documentation",
+      },
+    ],
         components: {
             securitySchemas: {
                 bearerAuth: {
@@ -24,6 +35,7 @@ const options: swaggerJsdoc.Options = {
         security: [{
             bearerAuth: [],
         }]
+
     },
 
     apis: ['./src/Endpoints/*.ts', './src/Endpoints/User/*.ts', './src/Endpoints/Document/*.ts', './src/Endpoints/Document/controllers/*.ts', './src/Endpoints/User/controllers/*.ts']
@@ -34,7 +46,7 @@ const options: swaggerJsdoc.Options = {
 export const customOptions = {
     customSiteTitle: "File Server Api",
     customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
-    customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui-es-bundle-core.min.js',
+    customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.js',
 
 }
 
