@@ -40,7 +40,9 @@ const PORT = SERVER_CONFIG.PORT;
 
  swaggerDocs(app, PORT as number);
 
-
+    app.use('/', (req, res) => {
+    res.redirect('/api')
+})
 
 app.use('/api/documents', doc);
 
