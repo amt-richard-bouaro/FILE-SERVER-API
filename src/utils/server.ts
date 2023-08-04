@@ -2,7 +2,6 @@ import express from 'express';
 import { SERVER_CONFIG } from '../config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import swaggerUi from 'swagger-ui-express';
 import api from '../Endpoints/default';
 import doc from '../Endpoints/Document/root';
 import user from '../Endpoints/User/root';
@@ -31,8 +30,8 @@ function createServer() {
     );
 
 
-    // app.use(express.urlencoded({ extended: true }));
-    // app.use(express.json());
+    
+    app.use(express.json());
     app.use(cookieParser());
 
 
@@ -40,7 +39,7 @@ function createServer() {
     const PORT = SERVER_CONFIG.PORT;
 
     app.get('/', (req, res) => { 
-        return res.redirect('/api');
+        return res.redirect('/api/docs');
     })
     
 
