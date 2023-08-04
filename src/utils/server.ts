@@ -33,7 +33,6 @@ function createServer() {
 
     app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
-    app.use(express.static("/public"));
     app.use(cookieParser());
 
 
@@ -49,7 +48,8 @@ function createServer() {
 
     app.use('/api', api);
 
-    // app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.get('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    
     swaggerDocs(app, PORT as number);
 
     app.use(notFoundError);
