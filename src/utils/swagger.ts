@@ -62,12 +62,12 @@ export const swaggerSpec = swaggerJsdoc(options);
 function swaggerDocs(app: Express, port: number) {
 
 
-    app.get('/api/docs', swaggerUi.serve, swaggerUi.setup(spec, {...customOptions}));
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(spec, {...customOptions}));
 
 
     app.get('/docs.json', (req: Request, res: Response) => {
         res.setHeader('Content-Type', 'application/json');
-        return res.status(STATUS.OK).json(swaggerSpec);
+        return res.status(STATUS.OK).json(spec);
     })
 
     console.log(`Docs available at https://file-server-api.vercel.app/api/docs`);

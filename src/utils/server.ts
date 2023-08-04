@@ -39,6 +39,9 @@ function createServer() {
 
     const PORT = SERVER_CONFIG.PORT;
 
+    app.get('/', (req, res) => { 
+        return res.redirect('/api');
+    })
     
 
     app.use('/api/documents', doc);
@@ -48,9 +51,10 @@ function createServer() {
 
     app.use('/api', api);
 
-    app.get('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-    
+   
+
     swaggerDocs(app, PORT as number);
+    
 
     app.use(notFoundError);
     app.use(errorHandler);
