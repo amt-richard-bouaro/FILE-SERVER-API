@@ -6,7 +6,6 @@ import path from 'path';
 import fs from 'fs';
 
 
-const router = require('express').Router();
 
 
 const options: swaggerJsdoc.Options = {
@@ -53,18 +52,12 @@ export const customOptions = {
     
 }
 
-export const spec = JSON.parse(
+const spec = JSON.parse(
     fs.readFileSync(path.join(__dirname, './docs.json'), 'utf8')
 );
 
 
 export const swaggerSpec = swaggerJsdoc(options);
-
-
-
-router.use('/', swaggerUi.serve);
-router.get('/', swaggerUi.setup(spec));
-
 
 function swaggerDocs(app: Express, port: number) {
 
@@ -74,7 +67,7 @@ function swaggerDocs(app: Express, port: number) {
 
     app.get('/docs.json', (req: Request, res: Response) => {
         res.setHeader('Content-Type', 'application/json');
-        return res.status(STATUS.OK).json(spec);
+        return res.status(STATUS.OK).json(swaggerSpec);
     })
 
     console.log(`Docs available at https://file-server-api.vercel.app/api/docs`);
@@ -82,5 +75,5 @@ function swaggerDocs(app: Express, port: number) {
 }
 
 
-export default router;
+export default swaggerDocs;
 
