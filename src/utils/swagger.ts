@@ -47,7 +47,7 @@ const options: swaggerJsdoc.Options = {
 export const customOptions = {
     customSiteTitle: "File Server Api",
     customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
-    customJs: '../../public/swagger-ui-bundle.js',
+    customJs: '/public/swagger-ui-bundle.js',
 
 }
 
