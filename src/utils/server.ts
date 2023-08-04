@@ -49,8 +49,6 @@ function createServer() {
 
     app.use('/api', api);
 
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-    
     swaggerDocs(app, PORT as number);
 
     app.use(notFoundError);
