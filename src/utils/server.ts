@@ -52,9 +52,9 @@ function createServer() {
     app.use('/api', api);
 
    
+    app.use('/api-docs', swaggerDocs)
+    // swaggerDocs(app, PORT as number);
 
-    swaggerDocs(app, PORT as number);
-    
 
     app.use(notFoundError);
     app.use(errorHandler);

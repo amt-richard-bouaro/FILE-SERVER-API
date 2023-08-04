@@ -6,6 +6,7 @@ import path from 'path';
 import fs from 'fs';
 
 
+const router = require('express').Router();
 
 
 const options: swaggerJsdoc.Options = {
@@ -52,12 +53,18 @@ export const customOptions = {
     
 }
 
-const spec = JSON.parse(
+export const spec = JSON.parse(
     fs.readFileSync(path.join(__dirname, './docs.json'), 'utf8')
 );
 
 
 export const swaggerSpec = swaggerJsdoc(options);
+
+
+
+router.use('/', swaggerUi.serve);
+router.get('/', swaggerUi.setup(spec));
+
 
 function swaggerDocs(app: Express, port: number) {
 
@@ -75,5 +82,5 @@ function swaggerDocs(app: Express, port: number) {
 }
 
 
-export default swaggerDocs;
+export default router;
 
