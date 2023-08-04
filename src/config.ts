@@ -2,7 +2,7 @@ export const SERVER_CONFIG = {
     PORT: process.env.PORT || 5050,
     NODE_ENV: process.env.NODE_ENV || 'development',
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
-    ALLOWED_ORIGINS: [process.env.CLIENT_ORIGIN, 'http://localhost:5050', 'https://file-server-api.vercel.app'],
+    ALLOWED_ORIGINS: [process.env.CLIENT_ORIGIN, 'http://localhost:5050','http://localhost:3000', 'https://file-server-api.vercel.app'],
     EMAIL_ADDRESS: process.env.EMAIL_ADDRESS || 'examples@example.com',
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD || 'somePassword'
 }
