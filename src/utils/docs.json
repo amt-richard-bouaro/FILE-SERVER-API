@@ -4,22 +4,22 @@
         "title": "File Server API Documentation",
         "version": "1.0.0",
         "contact": {
-            "name": "API Support",
-            "url": "https://file-server-api.vercel.app/api/",
+            "name": "File Server Application",
+            "url": "https://file-server-app.vercel.app",
             "email": "richard.bouaro@amalitech.org"
         }
     },
     "servers": [
         {
             "url": "https://file-server-api.vercel.app/",
-            "description": "File Server API Documentation"
+            "description": "File Server API "
         }
     ],
     "components": {
         "securitySchemas": {
             "bearerAuth": {
                 "type": "https",
-                "schema": "token",
+                "schema": "bearerAuth",
                 "bearerFormat": "jwt"
             }
         },

@@ -5,14 +5,14 @@ import pool from "../../../Database/db";
 import { STATUS } from "../../../config";
 
 
-export const changePassword = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => { 
-    
+export const changePassword = async (req: Request, res: Response<{ code: string, message: string,type: 'error'|'success', data?: any[] | {} | null }>, next: NextFunction) => {
+
     const request = <REQUEST_WITH_USER>req;
 
     const passwords = req.body;
 
     try {
-         
+
         CHANGE_PASSWORD.parse(passwords);
 
         const _id = request.user._id;
@@ -30,7 +30,7 @@ export const changePassword = async (req: Request, res: Response<{ code: string,
             type: "error"
         });
         }
-        
+
         const user:USER = query.rows[0];
 
         const decode = await bcrypt.compare(passwords.currentPassword, user.password);
@@ -55,16 +55,16 @@ export const changePassword = async (req: Request, res: Response<{ code: string,
             code:"PASSWORD_CHANGED",
             message: 'Password changed successfully',
             type: 'success',
-            data: updatedUser.rows[0]
+            // data: updatedUser.rows[0]
         });
-        
-        
+
+
     } catch (error) {
-        
+
         const err = <Error>error;
         next(err);
 
     }
-   
+
 
 }
