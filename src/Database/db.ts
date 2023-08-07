@@ -28,7 +28,7 @@ pool.connect(err => {
     if (err) {
        console.log('...connecting to database');
     } else {
-        console.log('Connected to database successfully');
+        // console.log('Connected to database successfully');
     } 
 })
 

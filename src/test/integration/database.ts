@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS users(
         'Ghet',
         'Rich',
         'ghetrich370555@gmail.com',
-        '$2b$10$qUsqH6THo67tg3/q4zxLaOm1R.MTxCrDQ7Nmpxc0J/ipMTeSKYP7.',
+        '$2b$10$NyazCDIOr4oDTMS2eZQghuVZQr1u2eNNTnmc4NFhcahBHdSkGhrQm',
         'admin',
 		'2023-07-19 04:58:54.146768+00',
         '2023-07-27 11:49:21.363041+00',
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS users(
     'new',
     'meew',
     'rich2@example.com',
-    '$2b$10$/OSGxsgu6pAC0ZOYu0pWnu9sNgS289MqIyHi62eHFu08H4ZbJyOIK',
+    '$2b$10$NyazCDIOr4oDTMS2eZQghuVZQr1u2eNNTnmc4NFhcahBHdSkGhrQm',
     'user',
     '2023-07-25 09:30:38.654791+00',
     '2023-07-25 15:53:31.539617+00',
@@ -79,15 +79,14 @@ CREATE TABLE IF NOT EXISTS users(
     'Fake',
     'User 3',
     'fake@example.com',
-    '$2b$10$/OSGxsgu6pAC0ZOYu0pWnu9sNgS289MqIyHi62eHFu08H4ZbJyOIK',
+    '$2b$10$NyazCDIOr4oDTMS2eZQghuVZQr1u2eNNTnmc4NFhcahBHdSkGhrQm',
     'user',
     '2023-07-25 09:30:38.654791+00',
     '2023-07-25 15:53:31.539617+00',
     true
     );
 
-INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ('6e9caa0c-b032-4501-971f-edf212be0209','LCF-86488-Cisco VPN (5).pdf', 'Test Document', 'Test Description','3c676aa7-7c2d-4a48-b188-f324e4a5ceef','LCF-86488-Cisco VPN (5).pdf',835500,'application/pdf', 'pdf');
- 
+INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ('6e9caa0c-b032-4501-971f-edf212be0209','LCF-86488-Cisco VPN (5).pdf', 'Test Document', 'Test Description','3c676aa7-7c2d-4a48-b188-f324e4a5ceef','https://something.com/LCF-86488-Cisco VPN (5).pdf',835500,'application/pdf', 'pdf');
  `;
 
 const dropTables = `
@@ -113,4 +112,6 @@ const USERS: {
     admin: { _id: 'e3eed61f-a296-4273-ba0e-89dcdac2002d' },
 }
 
-export {initiateDatabase, dropTables, USERS};
+const doc = '6e9caa0c-b032-4501-971f-edf212be0209'
+
+export {initiateDatabase, dropTables, USERS, doc};

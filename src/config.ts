@@ -8,10 +8,10 @@ export const SERVER_CONFIG = {
 }
 
 export const S3_BUCKET = {
-    REGION: process.env.AWS_BUCKET_REGION,
-    NAME: process.env.AWS_BUCKET_NAME || '',
-    ACCESS_KEY: process.env.AWS_ACCESS_KEY_ID || '',
-    SECRET_KEY: process.env.AWS_SECRET_ACCESS_KEY  || '',
+    REGION: process.env.AWS_BUCKET_REGION || 'us-east-1',
+    NAME: process.env.AWS_BUCKET_NAME || 'name',
+    ACCESS_KEY: process.env.AWS_ACCESS_KEY_ID || 'AKIA2OLAKITPOW46D5UT',
+    SECRET_KEY: process.env.AWS_SECRET_ACCESS_KEY  || 'Dr8p48S8L5Dr8p48S8L5Dr8p48S8L5Dr8p48S8L5',
 }
 
 interface dbConfiguration {
