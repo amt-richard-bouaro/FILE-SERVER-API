@@ -23,11 +23,11 @@ interface dbConfiguration {
 }
 
 export const DB_CONFIG: dbConfiguration = {
-    PORT: process.env.DB_PORT || '5432',
-    HOST: process.env.DB_HOST || 'localhost',
-    DATABASE: process.env.DB_DATABASE || 'db_fs_test',
-    USER: process.env.DB_USER || 'tester',
-    PASSWORD: process.env.DB_PASSWORD || 'testing',
+    PORT: process.env.DB_PORT || '',
+    HOST: process.env.DB_HOST || '',
+    DATABASE: process.env.DB_DATABASE || '',
+    USER: process.env.DB_USER || '',
+    PASSWORD: process.env.DB_PASSWORD || '',
 }
 
 interface status {

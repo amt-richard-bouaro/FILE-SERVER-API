@@ -39,5 +39,5 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-jest.config.ts
+# jest.config.ts
 .vercel

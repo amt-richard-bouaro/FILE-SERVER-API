@@ -2,7 +2,7 @@ import nodemailer, { SentMessageInfo } from 'nodemailer';
 import { SERVER_CONFIG } from '../config';
 import { Attachment } from 'nodemailer/lib/mailer';
 
-const transport = nodemailer.createTransport({
+export const transport = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: SERVER_CONFIG.EMAIL_ADDRESS || '',

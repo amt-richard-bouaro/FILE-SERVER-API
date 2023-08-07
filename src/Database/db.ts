@@ -9,12 +9,20 @@ const devPool = new Pool({
     password: DB_CONFIG.PASSWORD
 });
 
+const testPool = new Pool({
+    host: 'localhost',
+    database: 'db_fs_test',
+    port: 5432,
+    user: 'tester',
+    password: 'testing'
+});
+
 const proPool = new Pool({
   connectionString: process.env.POSTGRES_URL + "?sslmode=require",
 })
 
 
-const pool = process.env.NODE_ENV === "production" ? proPool : devPool;
+export const pool = process.env.NODE_ENV === "production" ? proPool : process.env.NODE_ENV === "development" ? devPool : testPool;
 
 pool.connect(err => {
     if (err) {
