@@ -47,7 +47,8 @@ app.get('/', async (req:Request, res:Response) => {
             app: 'Lizzy File Server',
             apiVersion: '1.0.0',
             author: 'rBOUARO',
-            apiDocs: 'https://file-server-api.vercel.app/api/docs'
+            apiDocs: 'https://file-server-api.vercel.app/api/docs',
+            application: 'https://file-server-app.vercel.app/'
         });
 })
 

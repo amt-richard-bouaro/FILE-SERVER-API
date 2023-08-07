@@ -326,7 +326,7 @@ app.post('/add/new',authenticate, restrictedToAdmin, createUser);
  *                   type: string
  *                   default: error
  */
-app.get('/logout',authenticate, logout);
+app.get('/logout', logout);
 
 /**
  * @openapi
@@ -484,7 +484,7 @@ app.put('/information/update', authenticate, updateUser);
  *     responses:
  *       200:
  *         description: SUCCESS
- *         content: 
+ *         content:
  *           application/json:
  *             schema:
  *               type: object
@@ -498,17 +498,17 @@ app.put('/information/update', authenticate, updateUser);
  *                   default: success
  *       400:
  *         description: BAD REQUEST
- *         content: 
+ *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error_Response'
  *       500:
  *         description: INTERNAL SERVER ERROR
- *         content: 
+ *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Error_Response'
- *        
+ *
  */
 app.put('/password/reset', resetPassword);
 

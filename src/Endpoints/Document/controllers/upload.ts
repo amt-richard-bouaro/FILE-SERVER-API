@@ -7,7 +7,7 @@ import { REQUEST_WITH_USER } from '../../User/Models';
 
 
 export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:NextFunction) => {
-    
+
     const incomingDocInfo = req.body;
     const request = <REQUEST_WITH_USER>req
     const user = request.user
@@ -17,16 +17,16 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
 
         DOC_INFO.parse(incomingDocInfo);
 
-        
+
 
         let file: FILE_INFO;
-       
-        
+
+
         if (req.file) {
 
 
             const incomingFile = req.file as  Express.MulterS3.File;
-         
+
             const originalname = incomingFile.originalname;
             const nameParts = originalname.split('.');
             const ext = nameParts[nameParts.length - 1];
@@ -52,11 +52,11 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
         const title = file.name.slice(0, 9) + ': ' + incomingDocInfo.title;
 
         const query = await pool.query({
-            text: `INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ($1, $2, $3, $4,$5,$6,$7, $8, $9) RETURNING _id, name, title, description, user_id, downloaded_count, emailed_count, size, ext`,
+            text: `INSERT INTO documents (_id, name, title, description, user_id, location, size, mime_type, ext) VALUES ($1, $2, $3, $4,$5,$6,$7, $8, $9) RETURNING _id, name, title, description, downloaded_count, emailed_count, size, ext`,
             values: [_id, file.name,title, incomingDocInfo.description, user._id, file.location, file.size, file.mimeType, file.ext]
         });
-            
-        
+
+
         return res.status(STATUS.CREATED).send({
             code: "DOCUMENT_UPLOADED",
             message: "Document has been successfully uploaded",
@@ -64,17 +64,11 @@ export const upload = async (req:Request<{},{},DOC_INFO>, res:Response, next:Nex
             data:query.rows[0]
         });
 
-      
-    
+
+
     } catch (error) {
-      
+
         const err = <Error>error;
         next(err);
     }
 }
-
-
-
-
-
-

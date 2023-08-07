@@ -2,6 +2,9 @@ import { Express, Request, Response } from 'express';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { STATUS } from '../config';
+import path from 'path';
+import fs from 'fs';
+
 
 
 
@@ -46,9 +49,12 @@ const options: swaggerJsdoc.Options = {
 export const customOptions = {
     customSiteTitle: "File Server Api",
     customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.3.1/swagger-ui.min.css',
-    customJs: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.min.js',
-
+    
 }
+
+const spec = JSON.parse(
+    fs.readFileSync(path.join(__dirname, './docs.json'), 'utf8')
+);
 
 
 export const swaggerSpec = swaggerJsdoc(options);
@@ -56,11 +62,11 @@ export const swaggerSpec = swaggerJsdoc(options);
 function swaggerDocs(app: Express, port: number) {
 
 
-    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { ...customOptions }));
+    app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(spec, {...customOptions}));
 
 
     app.get('/docs.json', (req: Request, res: Response) => {
-        // res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/json');
         return res.status(STATUS.OK).json(swaggerSpec);
     })
 

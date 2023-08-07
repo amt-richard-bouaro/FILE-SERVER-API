@@ -2,7 +2,6 @@ import express from 'express';
 import { SERVER_CONFIG } from '../config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import swaggerUi from 'swagger-ui-express';
 import api from '../Endpoints/default';
 import doc from '../Endpoints/Document/root';
 import user from '../Endpoints/User/root';
@@ -18,11 +17,11 @@ function createServer() {
             origin: function (origin, callback) {
                 if (origin && SERVER_CONFIG.ALLOWED_ORIGINS.includes(origin)) {
                     callback(null, true);
-                  
+
                 } else {
 
                     // console.log('Cors rejection origin:' + origin);  
-                    
+
                     callback(null, false);
                 }
             },
@@ -30,31 +29,36 @@ function createServer() {
         })
     );
 
+
+    
     app.use(express.json());
     app.use(cookieParser());
 
 
+
+    const PORT = SERVER_CONFIG.PORT;
+
+    app.get('/', (req, res) => { 
+        return res.redirect('/api/docs');
+    })
     
-const PORT = SERVER_CONFIG.PORT;
 
-    app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-       ...customOptions
-    }));
-
-app.use('/api/documents', doc);
+    app.use('/api/documents', doc);
 
 
-app.use('/api/users', user);
+    app.use('/api/users', user);
 
-app.use('/api', api);
+    app.use('/api', api);
 
+   
+
+    swaggerDocs(app, PORT as number);
     
-swaggerDocs(app, PORT as number);
-    
-app.use(notFoundError);
-app.use(errorHandler);
-    
-    return app;
+
+    app.use(notFoundError);
+    app.use(errorHandler);
+
+return app;
 }
 
 

@@ -55,7 +55,7 @@ export const resetPassword = async (req: Request, res: Response<{ code: string, 
             code:"PASSWORD_RESET_SUCCESS",
             message: 'Password reset successful. A new password has been generated and sent to your registered email address. For security reasons, please change your password as soon as possible.',
              type: "success",
-            data: resetUserPassword.rows[0]
+            // data: resetUserPassword.rows[0]
         });
 
 
