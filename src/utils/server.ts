@@ -58,7 +58,7 @@ function createServer() {
     app.use(notFoundError);
     app.use(errorHandler);
 
-    return app;
+return app;
 }
 
 
